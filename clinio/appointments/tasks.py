@@ -3,7 +3,7 @@ from time import sleep
 from .models import Appointment
 from django.core.mail import send_mail
 from django.db import connections, connection
-
+from accounts.models import Bill
 
 @shared_task
 def auto_approve_appointment(appointment_id):       
@@ -13,6 +13,13 @@ def auto_approve_appointment(appointment_id):
             appointment.status = 'Approved'
             appointment.save()
 
+            if not hasattr(appointment, 'bill'):
+                Bill.objects.create(
+                    appointment=appointment,
+                    amount=appointment.amount,
+                    notes='Consultation Fee'
+                )
+                
             #Send confirmation email
             if appointment.patient.user.email:
                 send_appointment_confirmation.delay(appointment.id)
