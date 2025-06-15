@@ -18,8 +18,8 @@ def auto_approve_appointment(appointment_id):
     except Appointment.DoesNotExist:
         pass
 
-@shared_task
-def send_appointment_confirmation(appointment_id):
+@shared_task(bind=True, max_retries=3, default_retry_delay=5)
+def send_appointment_confirmation(self, appointment_id):
     print(f"[CELERY] Running send_appointment_confirmation for ID: {appointment_id}")
     try:
         appointment = Appointment.objects.get(id=appointment_id)
@@ -33,6 +33,9 @@ def send_appointment_confirmation(appointment_id):
                 fail_silently=False
             )
             print("[CELERY] Email sent successfully.")
-    except Exception as e:
+        else:
+            print(f"[CELERY] No email found for patient ID {appointment.patient.id}")
+    except Appointment.DoesNotExist as e:
         print(f"[CELERY ERROR] {e}")
+        raise self.retry(exc=e)
 
