@@ -102,6 +102,7 @@ def staff_book_appointment(request):
                 appointment.time = selected_time
                 appointment.source = 'offline'
                 appointment.save()
+                appointment.set_fee_if_not_set()
                 transaction.on_commit(
                     lambda: auto_approve_appointment.apply_async(
                         args=[appointment.id],
