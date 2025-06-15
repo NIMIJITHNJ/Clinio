@@ -95,7 +95,7 @@ if os.environ.get('USE_PAMYSQL') == 'True':
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'carewell$default',
             'USER': 'carewell',
-            'PASSWORD': 'yourpassword',
+            'PASSWORD': 'NNJab@2024',
             'HOST': 'carewell.mysql.pythonanywhere-services.com',
             'PORT': '3306',
         }
