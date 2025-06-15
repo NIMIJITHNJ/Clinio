@@ -6,7 +6,8 @@ from django.db import connections, connection
 
 
 @shared_task
-def auto_approve_appointment(appointment_id):    
+def auto_approve_appointment(appointment_id): 
+    sleep(30)   
     try:
         appointment = Appointment.objects.get(id=appointment_id)
         if appointment.status == 'Pending':

@@ -102,9 +102,7 @@ def staff_book_appointment(request):
                 appointment.time = selected_time
                 appointment.source = 'offline'
                 appointment.save()
-                auto_approve_appointment.apply_async(
-                    args=[appointment.id], countdown=30  # 30 seconds delay
-                )
+                auto_approve_appointment.delay(appointment.id)
                 messages.success(request, "Appointment booked successfully.")
                 return redirect('staff_dashboard')
 
