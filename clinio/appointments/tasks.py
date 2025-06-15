@@ -2,6 +2,7 @@ from celery import shared_task
 from time import sleep
 from .models import Appointment
 from django.core.mail import send_mail
+from django.db import connections, connection
 
 
 @shared_task
@@ -37,5 +38,7 @@ def send_appointment_confirmation(self, appointment_id):
             print(f"[CELERY] No email found for patient ID {appointment.patient.id}")
     except Appointment.DoesNotExist as e:
         print(f"[CELERY ERROR] {e}")
+        connections['default'].ensure_connection()
+        connection.close() 
         raise self.retry(exc=e)
 
