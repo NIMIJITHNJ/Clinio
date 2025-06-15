@@ -10,3 +10,5 @@ db.sqlite3
 # Media & Static (generated or uploaded content)
 media/
 staticfiles/
+
+env/
