@@ -19,7 +19,7 @@ from admins.views import is_admin_or_staff
 from django.urls import reverse_lazy
 from decimal import Decimal 
 from appointments.tasks import send_appointment_confirmation
-
+from django.db import transaction
 
 
 
@@ -102,7 +102,12 @@ def staff_book_appointment(request):
                 appointment.time = selected_time
                 appointment.source = 'offline'
                 appointment.save()
-                auto_approve_appointment.delay(appointment.id)
+                transaction.on_commit(
+                    lambda: auto_approve_appointment.apply_async(
+                        args=[appointment.id],
+                        countdown=30
+                    )
+                )
                 messages.success(request, "Appointment booked successfully.")
                 return redirect('staff_dashboard')
 
