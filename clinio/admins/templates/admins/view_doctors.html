@@ -1,0 +1,31 @@
+{% extends 'admins/admins_base.html' %}
+{% load static %}
+{% block content %}
+
+<h2 class="text-2xl font-bold mb-6">👨‍⚕️ Doctors List</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {% for doctor in doctors %}
+  <div class="bg-white shadow rounded p-4 flex flex-col items-center text-center">
+    {% if doctor.profile_pic %}
+      <img src="{{ doctor.profile_pic.url }}" alt="Profile Picture" class="w-24 h-24 rounded-full object-cover mb-2">
+    {% else %}
+      <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center mb-2 text-gray-500">No Image</div>
+    {% endif %}
+    <h3 class="text-lg font-semibold">{{ doctor.name }}</h3>
+    <p class="text-sm text-gray-600">{{ doctor.specialization }} ({{ doctor.department }})</p>
+    <p class="text-sm text-gray-500 mt-1">📞 {{ doctor.phone }}</p>
+    <p class="text-sm text-gray-500">🎓 {{ doctor.qualifications|join:", " }}</p>
+    <a href="{% url 'edit_doctor' doctor.id %}" class="mt-3 inline-block bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">
+      ✏️ Edit
+    </a>
+    <a href="{% url 'delete_doctor' doctor.id %}" class="mt-3 inline-block bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700">
+      🗑️ Delete
+    </a>
+  </div>
+  {% empty %}
+    <p class="col-span-full text-center text-gray-500">No doctors available.</p>
+  {% endfor %}
+</div>
+
+{% endblock %}

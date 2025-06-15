@@ -1,0 +1,75 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white shadow-md rounded-lg px-8 pt-8 pb-8 mt-6 mb-12">
+  <h2 class="text-2xl font-semibold text-blue-800 mb-6">✏️ Edit Your Profile</h2>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- First Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">First Name</label>
+        {{ form.first_name }}
+      </div>
+
+      <!-- Last Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Last Name</label>
+        {{ form.last_name }}
+      </div>
+
+      <!-- Phone -->
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-gray-700">Phone</label>
+        {{ form.phone }}
+      </div>
+
+      <!-- Gender -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Gender</label>
+        {{ form.gender }}
+      </div>
+
+      <!-- Date of Birth -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Date of Birth</label>
+        {{ form.date_of_birth }}
+      </div>
+
+      <!-- Address -->
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-gray-700">Address</label>
+        {{ form.address }}
+      </div>
+
+      <!-- City -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">City</label>
+        {{ form.city }}
+      </div>
+
+      <!-- State -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">State</label>
+        {{ form.state }}
+      </div>
+
+      <!-- Zip Code -->
+      <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-gray-700">ZIP Code</label>
+        {{ form.zip_code }}
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mt-8 flex justify-between">
+      <a href="{% url 'patients_dashboard' %}" class="text-sm text-gray-700 hover:text-blue-700">← Back</a>
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded">
+        Save Changes
+      </button>      
+    </div>
+  </form>
+</div>
+{% endblock %}

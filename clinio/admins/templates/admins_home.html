@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - CareWell</title>
+    <link rel="stylesheet" href="{% static 'admins/css/admins_style.css' %}">
+</head>
+<body>
+    <!-- Blurred Background -->
+    <div class="background-overlay">
+        <h2 class="text-center">Admin Panel</h2>
+        <div class="login-tiles">
+            <div class="tile">
+                <img src="{% static 'admins/images/admin.png' %}" alt="Admin" class="avatar">
+                <a href="/admins/admins_login/" class="tile-text">Admin Login</a>
+            </div>
+            <div class="tile">
+                <img src="{% static 'admins/images/staff.png' %}" alt="Staff" class="avatar">
+                <a href="/staff/staff_login/" class="tile-text">Staff Login</a>
+            </div>
+            <div class="tile">
+                <img src="{% static 'admins/images/doctor.png' %}" alt="Doctor" class="avatar">
+                <a href="/doctors/doctor_login/" class="tile-text">Doctor Login</a>
+            </div>
+        </div>
+    </div>
+    <footer class="p-4">
+    © 2025 CareWell Multispeciality Hospital - Powered by Clinio - Caring Through Innovation
+    </footer>
+</body>
+</html>

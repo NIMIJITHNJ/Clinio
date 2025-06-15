@@ -1,0 +1,82 @@
+{% extends 'doctors/doctor_base.html' %}
+
+{% block content %}
+
+{% if messages %}
+  <div class="mb-4">
+    {% for message in messages %}
+      <div class="p-2 bg-green-100 text-green-800 rounded">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<div class="bg-white p-6 rounded shadow max-w-4xl mx-auto">
+  <h2 class="text-2xl font-bold text-blue-900 mb-4">📝 Consultation Summary</h2>
+
+  <!-- Patient Info -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700 mb-6">
+    <div>
+      <label class="font-semibold">Patient Name:</label>
+      <p>{{ patient.user.get_full_name }}</p>
+    </div>
+    <div>
+      <label class="font-semibold">Gender:</label>
+      <p>{{ patient.gender }}</p>
+    </div>
+    <div>
+      <label class="font-semibold">Appointment Date:</label>
+      <p>{{ appointment.date }} at {{ appointment.time }}</p>
+    </div>
+    <div>
+      <label class="font-semibold">Doctor:</label>
+      <p>Dr. {{ appointment.doctor.name }} ({{ appointment.doctor.specialization }})</p>
+    </div>
+  </div>
+
+  <!-- Consultation Details -->
+  <div class="space-y-4 mb-6">
+    <div>
+      <label class="font-semibold">Symptoms / Complaints:</label>
+      <p class="text-gray-800 whitespace-pre-line">{{ consultation.symptoms }}</p>
+    </div>
+    <div>
+      <label class="font-semibold">Diagnosis:</label>
+      <p class="text-gray-800 whitespace-pre-line">{{ consultation.diagnosis }}</p>
+    </div>
+    {% if consultation.prescription %}
+    <div>
+      <label class="font-semibold">Prescription:</label>
+      <p class="text-gray-800 whitespace-pre-line">{{ consultation.prescription }}</p>
+    </div>
+    {% endif %}
+    {% if consultation.lab_referral %}
+    <div>
+      <label class="font-semibold">Lab Referral:</label>
+      <p class="text-gray-800 whitespace-pre-line">{{ consultation.lab_referral }}</p>
+    </div>
+    {% endif %}
+    {% if consultation.xray_referral %}
+    <div>
+      <label class="font-semibold">X-Ray / Scan Referral:</label>
+      <p class="text-gray-800 whitespace-pre-line">{{ consultation.xray_referral }}</p>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="flex gap-4">
+    {% if consultation.prescription %}
+    <a href="{% url 'print_prescription' consultation.id %}" target="_blank" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">🖨️ Print Prescription</a>
+    {% endif %}
+    {% if consultation.lab_referral %}
+    <a href="{% url 'print_lab_referral' consultation.id %}" target="_blank" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">🧪 Print Lab Referral</a>
+    {% endif %}
+    {% if consultation.xray_referral %}
+    <a href="{% url 'print_xray_referral' consultation.id %}" target="_blank" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition">🩻 Print X-Ray Referral</a>
+    {% endif %}
+    <a href="{% url 'doctor_dashboard' %}" class="text-blue-600 hover:underline mt-2">← Back to Dashboard</a>
+  </div>
+</div>
+{% endblock %}

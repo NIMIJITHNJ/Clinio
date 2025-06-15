@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login - CareWell</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="{% static 'admins/css/login_style.css' %}">
+</head>
+<body>
+<div class="background-overlay">
+    <nav class="p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">CareWell Multispeciality Hospital</h1>
+            <ul class="flex space-x-6">
+                <li><a href="/admins/" class="hover:text-blue-200">Home</a></li>               
+            </ul>
+        </div>
+    </nav>
+    <div class="wrapper">        
+            <form method="post" action="">
+                {% csrf_token %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="error-message">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+                <h2>Admin Login</h2>
+                <div class="input-group">
+                    <input type="text" name="username" placeholder="Username" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <label>Password</label>
+                    <span class="toggle-password" onclick="togglePassword('password', this)">👁️</span>
+                </div>
+                <div class="remember">
+                    <label><input type="checkbox"> Remember me</label>
+                </div>
+                <button type="submit">Login</button>
+            </form>        
+    </div>
+</div>
+<footer class="p-4">
+    © 2025 CareWell Multispeciality Hospital - Powered by Clinio - Caring Through Innovation
+</footer>
+<script src="{% static 'admins/js/script.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Django files to ignore in production
+db.sqlite3
+.env
+
+# Media & Static (generated or uploaded content)
+media/
+staticfiles/

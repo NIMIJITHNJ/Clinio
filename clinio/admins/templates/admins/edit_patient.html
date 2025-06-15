@@ -1,0 +1,62 @@
+{% extends 'admins/admins_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto p-6 bg-white shadow rounded mt-8">
+  <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">Edit Patient: {{ patient.user.first_name }} {{ patient.user.last_name }}</h2>
+  <form method="post" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %}
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block mb-1 font-medium">First name</label>
+        {{ user_form.first_name }}
+      </div>
+      <div>
+        <label class="block mb-1 font-medium">Last name</label>
+        {{ user_form.last_name }}
+      </div>
+      <div class="md:col-span-2">
+        <label class="block mb-1 font-medium">Email address</label>
+        {{ user_form.email }}
+      </div>
+      <div>
+        <label class="block mb-1 font-medium">Phone</label>
+        {{ patient_form.phone }}
+      </div>
+      <div>
+        <label class="block mb-1 font-medium">Gender</label>
+        {{ patient_form.gender }}
+      </div>
+      <div>
+        <label class="block mb-1 font-medium">Date of birth</label>
+        {{ patient_form.date_of_birth }}
+      </div>
+      <div class="md:col-span-2">
+        <label class="block mb-1 font-medium">Address</label>
+        {{ patient_form.address }}
+      </div>
+      <div>
+        <label class="block mb-1 font-medium">City</label>
+        {{ patient_form.city }}
+      </div>
+      <div>
+        <label class="block mb-1 font-medium">State</label>
+        {{ patient_form.state }}
+      </div>
+      <div>
+        <label class="block mb-1 font-medium">Zip Code</label>
+        {{ patient_form.zip_code }}
+      </div>
+    </div>
+
+    <div class="pt-4">
+      <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+        Save Changes
+      </button>
+      <a href="{% url 'view_patients'  %}" class="bg-gray-400 text-white px-6 py-2 rounded hover:bg-gray-500 transition">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
+

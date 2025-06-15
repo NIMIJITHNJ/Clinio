@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="image-section relative">
+    <div class="blurry-bg"></div>
+    <img src="{% static 'images/about_background.png' %}" alt="CareWell Hospital" class="background-img">
+
+    <div class="content-wrapper">
+        <div class="hero-section text-center">
+            <h2 class="text-4xl font-bold">Cardiology</h2>
+            <p class="text-xl mt-2">"Have a heart for your heart"</p>
+        </div>
+
+        <div class="about-content text-center mt-10 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
+          <p class="text-lg leading-relaxed">
+            Our cardiology department helps patients prevent heart disease by changing their lifestyles and routines. 
+            We deal with the treatment, medical care and diagnosis of simple as well as complex cardiac conditions 
+            such as coronary artery disease, electrophysiology, congenital heart defects, heart failure and valvular 
+            heart disease etc. Our dedicated approach has been proven to provide maximum impact and maximum benefit 
+            from medications and all other forms of treatments provided.
+          </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

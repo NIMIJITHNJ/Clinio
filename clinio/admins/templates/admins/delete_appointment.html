@@ -1,0 +1,26 @@
+{% extends 'admins/admins_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-xl mx-auto mt-20 bg-white shadow-lg p-6 rounded-lg text-center">
+  <h2 class="text-2xl font-bold text-red-600 mb-6">Confirm Deletion</h2>
+
+  <p class="text-gray-700 mb-6">
+    Are you sure you want to delete the appointment of <strong>{{ appointment.patient.user.get_full_name }}</strong> with 
+    <strong>Dr. {{ appointment.doctor.user.get_full_name }}</strong> 
+    on <strong>{{ appointment.date }}</strong> at <strong>{{ appointment.time }}</strong>?
+  </p>
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="flex justify-center gap-4">
+      <button type="submit" class="bg-red-600 text-white px-5 py-2 rounded hover:bg-red-700">
+        Yes, Delete
+      </button>
+      <a href="{% url 'view_appointments' %}" class="bg-gray-300 text-gray-800 px-5 py-2 rounded hover:bg-gray-400">
+        Cancel
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

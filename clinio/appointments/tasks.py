@@ -1,0 +1,38 @@
+from celery import shared_task
+from time import sleep
+from .models import Appointment
+from django.core.mail import send_mail
+
+
+@shared_task
+def auto_approve_appointment(appointment_id):    
+    try:
+        appointment = Appointment.objects.get(id=appointment_id)
+        if appointment.status == 'Pending':
+            appointment.status = 'Approved'
+            appointment.save()
+
+            #Send confirmation email
+            if appointment.patient.user.email:
+                send_appointment_confirmation(appointment)
+    except Appointment.DoesNotExist:
+        pass
+
+@shared_task
+def send_appointment_confirmation(appointment_id):
+    print(f"[CELERY] Running send_appointment_confirmation for ID: {appointment_id}")
+    try:
+        appointment = Appointment.objects.get(id=appointment_id)
+        email = appointment.patient.user.email
+        if email:
+            send_mail(
+                subject='Appointment Confirmed – CareWell',
+                message=f"Dear {appointment.patient.user.first_name},\n\nYour appointment with Dr. {appointment.doctor.name} on {appointment.date} at {appointment.time} has been confirmed.\n\nThank you,\nCareWell",
+                from_email='carewellmsh@gmail.com',
+                recipient_list=[email],
+                fail_silently=False
+            )
+            print("[CELERY] Email sent successfully.")
+    except Exception as e:
+        print(f"[CELERY ERROR] {e}")
+

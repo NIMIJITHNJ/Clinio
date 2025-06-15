@@ -1,0 +1,85 @@
+{% extends 'staff/staff_base.html' %}
+{% block content %}
+<div class="container mx-auto p-6">
+  <h2 class="text-2xl font-bold mb-4">Billing Desk</h2>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="mb-4 p-2 rounded text-center text-white {% if message.tags == 'success' %}bg-green-600{% elif message.tags == 'error' %}bg-red-500{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <table class="min-w-full border-collapse bg-white shadow rounded">
+    <thead class="bg-blue-800 text-white">
+      <tr>
+        <th class="px-4 py-2 text-left">ID</th>
+        <th class="px-4 py-2 text-left">Patient</th>
+        <th class="px-4 py-2 text-left">Doctor</th>
+        <th class="px-4 py-2 text-left">Date</th>
+        <th class="px-4 py-2 text-left">Amount</th>
+        <th class="px-4 py-2 text-left">Payment Method</th>
+        <th class="px-4 py-2 text-left">Transaction ID</th>
+        <th class="px-4 py-2 text-left">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for appt in unpaid_appointments %}
+      <tr class="border-t">
+        <form method="POST" action="{% url 'staff_mark_payment' appt.id %}" class="mark-paid-form">
+          {% csrf_token %}
+          <input type="hidden" name="appointment_id" value="{{ appt.id }}">
+          <td class="px-4 py-2">{{ appt.id }}</td>
+          <td class="px-4 py-2">{{ appt.patient.user.get_full_name }}</td>
+          <td class="px-4 py-2">{{ appt.doctor.user.get_full_name }}</td>
+          <td class="px-4 py-2">{{ appt.date }} {{ appt.time }}</td>
+          <td class="px-4 py-2">₹{{ appt.amount }}</td>
+          <td class="px-4 py-2">
+            <select name="payment_method" required class="border rounded px-2 py-1">
+              <option value="">Select</option>
+              <option value="card">Card</option>
+              <option value="upi">UPI</option>
+              <option value="cash">Cash</option>
+            </select>
+          </td>
+          <td class="px-4 py-2">
+            <input type="text" name="transaction_id" placeholder="Optional if cash" class="border rounded px-2 py-1">
+          </td>
+          <td class="px-4 py-2">
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded">Mark Paid</button>
+          </td>
+        </form>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="8" class="text-center p-4">No unpaid appointments found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<script>
+document.querySelectorAll('.mark-paid-form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        fetch(this.action, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.redirect_url) {
+                window.open(data.redirect_url, '_blank');
+                location.reload();
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

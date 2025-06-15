@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="image-section relative">
+    <div class="blurry-bg"></div>
+    <img src="{% static 'images/about_background.png' %}" alt="CareWell Hospital" class="background-img">
+
+    <div class="content-wrapper">
+        <div class="hero-section text-center">
+            <h2 class="text-4xl font-bold">General Medicine</h2>
+            <p class="text-xl mt-2">"Healing through precision and care"</p>
+        </div>
+
+        <div class="about-content text-center mt-10 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
+          <p class="text-lg leading-relaxed">
+            Minimally invasive surgery relates to any surgical procedure which is performed through tiny incisions
+            instead of a large opening of the body. Smaller incisions have a quicker recovery time and less pain
+            than traditional open operation but with identical benefits as traditional surgery. Some of the commonly
+            practised surgical operations are Laparoscopic surgery, Robotic surgery, and GYN/Pelvic surgery.
+            Our team specializes in General and Minimally Invasive surgical procedures.
+          </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

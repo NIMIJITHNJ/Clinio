@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CareWell Staff Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-blue-900 text-white px-6 py-3 shadow-md">
+    <div class="flex justify-between items-center">
+      <h1 class="text-lg font-bold">CareWell Staff Portal</h1>
+      <div class="flex gap-4 items-center">
+        {% if show_home_link %}
+        <a href="{% url 'staff_dashboard' %}" class="hover:underline">Home</a>
+        {% endif %}
+        {% block navbar_extras %}{% endblock %}
+        {% if show_logout %}
+        <a href="{% url 'staff_logout' %}" class="hover:underline">Logout</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto px-4 py-6">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white text-center text-gray-600 py-4 shadow-inner">
+    <div class="container mx-auto text-sm">
+      © {{ year|default:"2025" }} CareWell Multispeciality Hospital · Powered by Clinio · Caring Through Innovation
+    </div>
+  </footer>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

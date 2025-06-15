@@ -1,0 +1,124 @@
+{% extends 'staff/staff_base.html' %}
+{% load static %}
+
+{% block navbar_extras %}
+<a href="{% url 'reset_password' %}" class="hover:underline">Reset Password</a>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+  <div class="mb-4">
+    {% for message in messages %}
+      <div class="p-2 bg-green-100 text-green-800 rounded">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<div class="flex justify-center">
+  <h2 class="text-2xl font-bold mb-4">Receptionist Dashboard</h2>
+</div>
+
+<!-- Summary Cards -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+  <a href="{% url 'staff_view_patients' %}">
+  <div class="p-4 bg-white shadow rounded flex items-center cursor-pointer hover:bg-blue-50 transition">
+    <span class="text-2xl mr-3">👥</span>
+    <div>
+      <h3 class="font-semibold">Total Patients</h3>
+      <p>{{ total_patients }}</p>
+    </div>
+  </div>
+  </a>
+
+    <a href="{% url 'staff_view_appointments' %}">
+  <div class="p-4 bg-white shadow rounded flex items-center cursor-pointer hover:bg-blue-50 transition">
+    <span class="text-2xl mr-3">📅</span>
+    <div>
+      <h3 class="font-semibold">Total Appointments</h3>
+      <p>{{ total_appointments }}</p>
+    </div>
+  </div>
+  </a>
+
+  <div class="p-4 bg-white shadow rounded flex items-center">
+    <span class="text-2xl mr-3">✅</span>
+    <div>
+      <h3 class="font-semibold">Appointments Today</h3>
+      <p>{{ appointments_today }}</p>
+    </div>
+  </div>
+  <div class="p-4 bg-white shadow rounded flex items-center">
+    <span class="text-2xl mr-3">⏳</span>
+    <div>
+      <h3 class="font-semibold">Pending Appointments</h3>
+      <p>{{ pending_appointments }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- Action Buttons -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+  <a href="{% url 'offline_patient_register' %}" class="bg-green-100 text-green-800 p-4 rounded shadow text-center hover:shadow-lg">
+    ➕ Register Patient
+  </a>
+  <a href="{% url 'staff_book_appointment' %}" class="bg-blue-100 text-blue-800 p-4 rounded shadow text-center hover:shadow-lg">
+    📅 Book Appointment
+  </a>
+  <a href="{% url 'billing_dashboard' %}" class="bg-indigo-100 text-indigo-800 p-4 rounded shadow text-center hover:shadow-lg">
+    🧾 Billing
+  </a>
+  {% comment %}
+  <a href="{% url 'doctor_availability' %}" class="bg-yellow-100 text-yellow-800 p-4 rounded shadow text-center hover:shadow-lg">
+    🩺 Doctor Availability
+  </a>
+    {% endcomment %}
+</div>
+
+<!-- Recent Appointments Table -->
+<div class="bg-white shadow rounded p-4 mb-6">
+  <h3 class="text-lg font-semibold mb-2">Recent Appointments</h3>
+  <table class="w-full table-auto text-left border">
+    <thead>
+      <tr class="border-b">
+        <th>ID</th><th>Patient</th><th>Doctor</th><th>Status</th><th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for appt in recent_appointments %}
+      <tr class="border-b" id="appt-{{ appt.id }}">
+      <td>{{ appt.id }}</td>
+      <td>{{ appt.patient.user.get_full_name|default:appt.patient.user.username }}</td>
+      <td>{{ appt.doctor.user.get_full_name|default:appt.doctor.user.username }}</td>
+      <td class="status-cell">
+        {% if appt.status == 'Pending' %}
+          <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">Pending</span>
+        {% elif appt.status == 'Approved' %}
+          <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Approved</span>
+        {% elif appt.status == 'Cancelled' %}
+          <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm">Cancelled</span>
+        {% endif %}
+      </td>
+      <td>{{ appt.date }}</td>
+          </tr>
+      {% empty %}
+      <tr><td colspan="5" class="text-center text-gray-500 py-4">No recent appointments.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <nav class="mt-4 flex justify-center items-center space-x-2">
+  {% if recent_appointments.has_previous %}
+    <a href="?page={{ recent_appointments.previous_page_number }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Previous</a>
+  {% endif %}
+  <span class="text-sm text-gray-600">Page {{ recent_appointments.number }} of {{ recent_appointments.paginator.num_pages }}</span>
+  {% if recent_appointments.has_next %}
+    <a href="?page={{ recent_appointments.next_page_number }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</a>
+  {% endif %}
+</nav>
+</div>
+<script>
+  const recentAppointmentsUrl = "{% url 'recent_appointments_api' %}";
+</script>
+<script src="{% static 'admins/js/dashboard.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareWell Multispeciality Hospital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation Bar -->
+<nav class="p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">CareWell Multispeciality Hospital</h1>
+        <ul class="flex space-x-6">
+            <li><a href="/" class="hover:text-blue-400">Home</a></li>
+            <li><a href="/about/" class="hover:text-blue-400">About</a></li>
+            <li class="relative dropdown">
+            <a href="#" class="hover:text-blue-500">Specialities</a>
+            <ul class="dropdown-menu absolute left-0 top-full bg-white text-sm shadow-md rounded py-2 w-48 z-50">
+                <li><a href="{% url 'cardiology' %}" class="block px-4 py-2 hover:bg-blue-50">Cardiology</a></li>
+                <li><a href="{% url 'neurology' %}" class="block px-4 py-2 hover:bg-blue-50">Neurology</a></li>
+                <li><a href="{% url 'pediatrics' %}" class="block px-4 py-2 hover:bg-blue-50">Pediatrics</a></li>
+                <li><a href="{% url 'orthopaedics' %}" class="block px-4 py-2 hover:bg-blue-50">Orthopaedics</a></li>
+                <li><a href="{% url 'dermatology' %}" class="block px-4 py-2 hover:bg-blue-50">Dermatology</a></li>
+                <li><a href="{% url 'general_medicine' %}" class="block px-4 py-2 hover:bg-blue-50">General Medicine</a></li>
+            </ul>
+            </li>
+            <li class="relative dropdown">
+            <a href="#" class="hover:text-blue-500">Doctors</a>
+            <ul class="dropdown-menu absolute left-0 top-full bg-white text-sm shadow-md rounded py-2 w-48 z-50">
+                <li><a href="{% url 'our_doctors' %}" class="block px-4 py-2 hover:bg-blue-50">Our Doctors</a></li>
+            </ul>
+            </li>
+            <li>
+            <a href="{% url 'contact_us' %}" class="hover:text-blue-400">Contact</a>
+            </li>
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'patients_dashboard' %}" class="hover:text-blue-400">Dashboard</a></li>
+            <li><a href="{% url 'logout' %}" class="bg-red-500 text-white px-4 py-1 rounded">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'register' %}" class="bg-green-500 text-white px-4 py-2 rounded">Register</a></li>
+            <li><a href="{% url 'login' %}" class="bg-blue-500 text-white px-4 py-2 rounded">Login</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+   
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- Footer -->
+<footer class="p-4">
+    © 2025 CareWell Multispeciality Hospital - Powered by Clinio - Caring Through Innovation
+</footer>
+</body>
+</html>

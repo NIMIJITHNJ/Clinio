@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Lab Referral</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h2 { text-align: center; }
+    .section { margin-bottom: 20px; }
+    .label { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>🧪 Lab Referral</h2>
+
+  <div class="section">
+    <p><span class="label">Patient:</span> {{ patient.user.get_full_name }}</p>
+    <p><span class="label">Gender:</span> {{ patient.gender }}</p>
+    <p><span class="label">Date:</span> {{ appointment.date }} | Time: {{ appointment.time }}</p>
+  </div>
+
+  <div class="section">
+    <p><span class="label">Referred By:</span> Dr. {{ appointment.doctor.name }} ({{ appointment.doctor.specialization }})</p>
+  </div>
+
+  <div class="section">
+    <p><span class="label">Lab Referral Instructions:</span><br>
+    {{ consultation.lab_referral|default:"No referral provided." }}</p>
+  </div>
+</body>
+</html>

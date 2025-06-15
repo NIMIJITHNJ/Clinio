@@ -1,0 +1,51 @@
+{% extends 'admins/admins_base.html' %}
+{% block content %}
+<div class="p-6">
+  <h2 class="text-2xl font-bold mb-4">Registered Patients</h2>
+    {% if messages %}
+    <div class="mb-4">
+      {% for message in messages %}
+        <div class="p-2 bg-green-100 text-green-800 rounded">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  <div class="overflow-x-auto">
+    <table class="min-w-full table-fixed border-collapse">
+      <thead class="bg-blue-600 text-white">
+      <tr class="bg-blue-800 text-white text-left">
+        <th class="px-4 py-2">ID</th>
+        <th class="px-4 py-2">Full Name</th>
+        <th class="px-4 py-2">Email</th>
+        <th class="px-4 py-2">Phone</th>
+        <th class="px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for patient in patients %}
+      <tr class="bg-white border-b hover:bg-gray-50">
+        <td class="px-4 py-2">{{ patient.id }}</td>
+        <td class="px-4 py-2">  
+            <a href="{% url 'view_patient_profile' patient.id %}" class="text-blue-600 hover:underline">
+            {{ patient.user.first_name }} {{ patient.user.last_name }}
+            </a>
+        </td>
+        <td class="px-4 py-2">{{ patient.user.email }}</td>
+        <td class="px-4 py-2">{{ patient.phone|default:'-' }}</td>
+        <td class="px-4 py-2">    
+            <a href="{% url 'edit_patient' patient.id %}" title="Edit">
+                ✏️
+            </a>
+            <a href="{% url 'delete_patient' patient.id %}" title="Delete">
+                🗑️
+            </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="px-4 py-4 text-center text-gray-500">No patients found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

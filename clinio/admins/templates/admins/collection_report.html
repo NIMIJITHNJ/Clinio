@@ -1,0 +1,51 @@
+{% extends 'admins/admins_base.html' %}
+{% block content %}
+<div class="p-6">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">Accounts Summary</h2>
+
+  <form method="get" class="flex flex-wrap gap-4 mb-6 items-end">
+    <div>
+      <label class="block mb-1 font-medium text-gray-700">From:</label>
+      <input type="date" name="from" value="{{ date_from }}" class="border border-gray-300 rounded px-3 py-1">
+    </div>
+    <div>
+      <label class="block mb-1 font-medium text-gray-700">To:</label>
+      <input type="date" name="to" value="{{ date_to }}" class="border border-gray-300 rounded px-3 py-1">
+    </div>
+    <div>
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Filter</button>
+    </div>
+  </form>
+
+  <div class="mb-4">
+    <h3 class="text-lg font-semibold text-gray-700">Total Collected: <span class="text-green-700">₹{{ total_amount }}</span></h3>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full table-fixed border-collapse">
+      <thead class="bg-blue-800 text-white">
+        <tr>
+          <th class="py-2 px-4 text-left">ID</th>
+          <th class="py-2 px-4 text-left">Date</th>
+          <th class="py-2 px-4 text-left">Patient</th>
+          <th class="py-2 px-4 text-left">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appt in appointments %}
+        <tr class="bg-white border-b hover:bg-gray-50">
+          <td class="py-2 px-4">{{ appt.id }}</td>
+          <td class="py-2 px-4">{{ appt.date }}</td>
+          <td class="py-2 px-4">{{ appt.patient.user.get_full_name }}</td>
+          <td class="py-2 px-4">₹{{ appt.amount }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4" class="text-center py-4 text-gray-500">No paid appointments found for this range.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

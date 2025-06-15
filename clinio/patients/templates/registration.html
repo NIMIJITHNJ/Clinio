@@ -1,0 +1,95 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register - CareWell</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <link rel="stylesheet" href="{% static 'patients/css/style.css' %}">
+</head>
+<body>
+<div class="background-overlay">
+    <nav class="p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">CareWell Multispeciality Hospital</h1>
+            <ul class="flex space-x-6">
+                <li><a href="/" class="hover:text-blue-200">Home</a></li>
+                <li><a href="/about/" class="hover:text-blue-200">About</a></li>
+                <li><a href="#" class="hover:text-blue-200">Specialities</a></li>
+                <li><a href="#" class="hover:text-blue-200">Doctors</a></li>
+                <li><a href="#" class="hover:text-blue-200">Contact</a></li>                
+                <li><a href="/patients/login/" class="bg-blue-500 px-4 py-2 rounded text-white">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="wrapper">
+        <form method="post" action="">
+            {% csrf_token %}
+            <h2>Register</h2>
+            <div class="input-group">
+            <input type="text" name="username" required>
+            <label>Username</label>
+            </div>
+            <div class="input-group">
+            <input type="email" name="email" required>
+            <label>Email</label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password1" name="password1" required>
+                <label>Password</label>
+                <span class="toggle-password" onclick="togglePassword('password1', this)">👁️</span>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password2" name="password2" required>
+                <label>Confirm Password</label>
+                <span class="toggle-password" onclick="togglePassword('password2', this)">👁️</span>
+            </div>    
+            <div class="remember">
+            <label><input type="checkbox" name="agree_to_terms" required> I agree to the terms & conditions</label>
+            </div>
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        {% if message.tags == 'success' %}
+                            <p class="success-message">{{ message }}</p>
+                        {% else %}
+                            <p class="error-message">{{ message }}</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if form.errors and form.is_bound %}
+            <div class="error-message">
+            {% for field in form %}
+                {% for error in field.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+            </div>
+            {% endif %}       
+            <button type="submit">Register</button>
+            
+            {% load socialaccount %}
+            <div class="mt-4 text-center">
+                <a href="/accounts/google/login/?process=signup" class="your-button-classes">
+                    <img src="{% static 'patients/images/google_logo.png' %}" class="inline h-5 mr-2">
+                    Register with Google
+                </a>
+            </div>
+            
+            <div class="signUp-link">
+            <p>Already have an account? <a href="{% url 'login' %}" class="signInBtn-link">Login</a></p>
+            </div>    
+        </form>
+    </div>
+</div>
+<footer class="p-4">
+    © 2025 CareWell Multispeciality Hospital - Powered by Clinio - Caring Through Innovation
+</footer>
+<script src="{% static 'patients/js/script.js' %}"></script>
+</body>
+</html>

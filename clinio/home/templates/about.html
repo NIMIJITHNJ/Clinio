@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block content %}
+<section class="image-section relative">
+    <!-- Background and Blurry Effect -->
+    <div class="blurry-bg"></div>
+    <img src="{% static 'images/about_background.png' %}" alt="CareWell Hospital" class="background-img">
+
+    <!-- Content Section (Hero and About) -->
+    <div class="content-wrapper">
+        <div class="hero-section text-center">
+            <h2 class="text-4xl font-bold">CareWell Multispeciality Hospital</h2>
+            <p class="text-xl mt-2">Delivering Compassionate Care with Advanced Medical Solutions</p>
+        </div>
+
+        <div class="about-content text-center mt-10 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
+            <h3 class="text-3xl font-semibold mb-4">About Us</h3>
+            <p class="text-lg leading-relaxed">
+                CareWell Multispeciality Hospital is committed to providing world-class healthcare services to the community.
+                Our highly qualified medical professionals and state-of-the-art facilities ensure that every patient receives the
+                best possible care. From routine check-ups to complex surgeries, our team is equipped to handle a wide range of medical needs.
+            </p>
+            <h4 class="text-2xl font-semibold mt-6">Location</h4>
+            <p class="text-lg leading-relaxed mt-2">
+                CareWell Multispeciality Hospital<br>
+                Plot No. 24, Sector 12,<br>
+                New Ashok Nagar,<br>
+                Delhi - 110096, India
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

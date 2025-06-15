@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+  <nav class="bg-blue-900 p-4 text-white">
+    <div class="flex justify-between items-center">
+      <h1 class="font-bold text-xl">CareWell Admin</h1>
+      <div class="flex gap-4 items-center">        
+        <a href="{% url 'admins_dashboard' %}" class="hover:underline">Home</a>
+        {% block navbar_extras %}{% endblock %}
+        <a href="{% url 'admins_logout' %}" class="hover:underline">Logout</a>        
+      </div>
+    </div>
+  </nav>
+  <div class="p-6">
+    {% block content %}{% endblock %}
+  </div>
+  <footer class="bg-gray-100 text-center text-gray-600 py-4 mt-8 shadow-inner">
+  <div class="container mx-auto text-sm">
+    © {{ year|default:"2025" }} CareWell Multispeciality Hospital · Powered by Clinio · Caring Through Innovation
+  </div>
+</footer>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

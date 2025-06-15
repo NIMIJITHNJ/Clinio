@@ -1,0 +1,76 @@
+{% extends 'admins/admins_base.html' %}
+
+{% block content %}
+<div class="bg-white p-6 rounded shadow max-w-3xl mx-auto">
+  <h2 class="text-2xl font-bold text-blue-900 mb-4">👤 Patient Details</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+    <div>
+      <label class="text-gray-600 font-semibold">Full Name</label>
+      <p class="text-gray-800">{{ patient.user.get_full_name|default:patient.user.username }}</p>
+    </div>
+
+    <div>
+      <label class="text-gray-600 font-semibold">Email</label>
+      <p class="text-gray-800">{{ patient.user.email }}</p>
+    </div>
+
+    <div>
+      <label class="text-gray-600 font-semibold">Phone</label>
+      <p class="text-gray-800">{{ patient.phone|default:"N/A" }}</p>
+    </div>
+
+    <div>
+      <label class="text-gray-600 font-semibold">Gender</label>
+      <p class="text-gray-800">{{ patient.gender }}</p>
+    </div>
+
+    <div>
+        <label class="font-semibold">Age:</label>
+        <p>{{ age|default:"Not provided" }}</p>
+    </div>
+
+    <div>
+      <label class="text-gray-600 font-semibold">Registered By</label>
+      <p class="text-gray-800 capitalize">{{ patient.registered_by }}</p>
+    </div>
+  </div>
+
+  <h2 class="text-xl font-bold mt-6">Medical History</h2>
+
+<!-- Prescriptions -->
+<h3 class="mt-4 font-semibold">Prescriptions</h3>
+<ul class="list-disc ml-5">
+  {% for p in prescriptions %}
+    <li>{{ p.date }} - {{ p.diagnosis }} - <a href="{{ p.get_pdf_url }}" class="text-blue-500 underline">View</a></li>
+  {% empty %}
+    <li>No prescriptions found.</li>
+  {% endfor %}
+</ul>
+
+<!-- Lab Reports -->
+<h3 class="mt-4 font-semibold">Lab Reports</h3>
+<ul class="list-disc ml-5">
+  {% for l in lab_reports %}
+    <li>{{ l.date }} - {{ l.test_type }} - <a href="{{ l.get_pdf_url }}" class="text-blue-500 underline">View</a></li>
+  {% empty %}
+    <li>No lab reports found.</li>
+  {% endfor %}
+</ul>
+
+<!-- X-Ray Reports -->
+<h3 class="mt-4 font-semibold">X-Ray Reports</h3>
+<ul class="list-disc ml-5">
+  {% for x in xray_reports %}
+    <li>{{ x.date }} - {{ x.xray_type }} - <a href="{{ x.get_pdf_url }}" class="text-blue-500 underline">View</a></li>
+  {% empty %}
+    <li>No x-ray reports found.</li>
+  {% endfor %}
+</ul>
+
+  <div class="mt-6">
+    <a href="{% url 'view_patient_profile' patient.id %}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">← Back</a>
+  </div>
+
+</div>
+{% endblock %}

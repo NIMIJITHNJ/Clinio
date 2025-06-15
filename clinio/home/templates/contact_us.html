@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="image-section relative">
+    <div class="blurry-bg"></div>
+    <img src="{% static 'images/about_background.png' %}" alt="CareWell Hospital" class="background-img">
+
+    <div class="content-wrapper">
+        <div class="hero-section text-center">
+            <h2 class="text-4xl font-bold">Contact Us</h2>
+            <p class="text-xl mt-2">"Your health is our priority"</p>
+        </div>
+
+        <div class="about-content text-center mt-10 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
+            <p class="text-lg leading-relaxed mt-2">
+                CareWell Multispeciality Hospital<br>
+                Plot No. 24, Sector 12,<br>
+                New Ashok Nagar,<br>
+                Delhi - 110096, India<br>
+                <strong>Phone:</strong> +91 123 456 7890 | <strong>Email:</strong> carewellmsh@gmail.com<br>
+            </p>
+          <p class="text-lg leading-relaxed">
+            At CareWell Hospital, we are committed to providing you with the best healthcare experience possible.
+            If you have any questions or need assistance, please don't hesitate to reach out to us. Our dedicated team is here to help you.
+          </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

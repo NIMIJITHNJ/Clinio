@@ -1,0 +1,65 @@
+{% extends 'doctors/doctor_base.html' %}
+{% load form_filters %}
+
+{% block content %}
+<div class="bg-white p-6 rounded shadow max-w-4xl mx-auto">
+  <h2 class="text-2xl font-bold text-blue-900 mb-4">🩺 Start Consultation</h2>
+
+  <!-- Patient Info -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-sm text-gray-700">
+    <div>
+      <label class="font-semibold">Patient Name:</label>
+      <p>{{ patient.user.get_full_name }}</p>
+    </div>
+    <div>
+      <label class="font-semibold">Gender:</label>
+      <p>{{ patient.gender }}</p>
+    </div>
+    <div>
+      <label class="font-semibold">Phone:</label>
+      <p>{{ patient.phone|default:"Not provided" }}</p>
+    </div>
+    <div>
+      <label class="font-semibold">Appointment Date & Time:</label>
+      <p>{{ appointment.date }} at {{ appointment.time }}</p>
+    </div>
+  </div>
+
+  <!-- Consultation Form -->
+  <form method="POST" class="space-y-5">
+    {% csrf_token %}
+    
+    <div>
+      <label class="block font-semibold mb-1">Patient Complaints / Symptoms</label>
+      {{ form.symptoms|add_class:"w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" }}
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1">Diagnosis</label>
+      {{ form.diagnosis|add_class:"w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" }}
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1">Prescription</label>
+      {{ form.prescription|add_class:"w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" }}
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1">Lab Referral</label>
+      {{ form.lab_referral|add_class:"w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" }}
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1">X-Ray / Scan Referral</label>
+      {{ form.xray_referral|add_class:"w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" }}
+    </div>
+
+    <div class="pt-4 flex gap-4">
+      <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+        Save Consultation
+      </button>
+      <a href="{% url 'doctor_dashboard' %}" class="text-blue-600 hover:underline mt-2">← Back to Dashboard</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

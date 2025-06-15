@@ -1,0 +1,71 @@
+{% extends 'admins/admins_base.html' %}
+{% block content %}
+<div class="p-6">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">All Appointments</h2>
+
+  {% if messages %}
+    <div class="mb-4">
+      {% for message in messages %}
+        <div class="p-2 bg-green-100 text-green-800 rounded">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full table-fixed border-collapse">
+      <thead class="bg-blue-600 text-white">
+        <tr class="bg-blue-800 text-white text-left">
+          <th class="py-2 px-4">ID</th>
+          <th class="py-2 px-4">Patient</th>
+          <th class="py-2 px-4">Doctor</th>
+          <th class="py-2 px-4">Date</th>
+          <th class="py-2 px-4">Time</th>
+          <th class="py-2 px-4">Status</th>
+          <th class="py-2 px-4">Payment</th>
+          <th class="py-2 px-4">Amount</th>
+          <th class="py-2 px-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appt in appointments %}
+        <tr class="bg-white border-b hover:bg-gray-50">
+          <td class="py-2 px-4">{{ appt.id }}</td>
+          <td class="py-2 px-4">{{ appt.patient.user.get_full_name }}</td>
+          <td class="py-2 px-4">{{ appt.doctor.user.get_full_name }}</td>
+          <td class="py-2 px-4">{{ appt.date }}</td>
+          <td class="py-2 px-4">{{ appt.time }}</td>
+          <td class="py-2 px-4">
+            <span class="px-2 py-1 rounded 
+              {% if appt.status == 'Approved' %}bg-green-100 text-green-800
+              {% elif appt.status == 'Pending' %}bg-yellow-100 text-yellow-800
+              {% else %}bg-red-100 text-red-800{% endif %}">
+              {{ appt.status }}
+            </span>
+          </td>
+          <td class="py-2 px-4">
+            <span class="px-2 py-1 rounded {% if appt.payment_status == 'paid' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+              {{ appt.payment_status|title }}
+            </span>
+          </td>
+          <td class="py-2 px-4">₹{{ appt.amount }}</td>
+          <td class="py-2 px-4 space-x-2">
+            <a href="{% url 'admin_edit_appointment' appt.id %}" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 text-sm">Edit</a>
+            {% if appt.payment_status != 'paid' %}
+            <a href="{% url 'admin_delete_appointment' appt.id %}" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm">Delete</a>
+            {% else %}
+            <span class="btn btn-secondary">Locked</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="9" class="text-center py-4 text-gray-500">No appointments found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

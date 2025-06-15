@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="image-section relative">
+    <div class="blurry-bg"></div>
+    <img src="{% static 'images/about_background.png' %}" alt="Emergency Background" class="background-img">
+
+    <div class="content-wrapper">
+        <div class="hero-section text-center">
+            <h2 class="text-4xl font-bold text-red-600">Emergency Contact</h2>
+            <p class="text-xl mt-2 text-white">"Immediate help when you need it most"</p>
+        </div>
+
+        <div class="about-content text-center mt-10 p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-md">
+            <p class="text-lg leading-relaxed text-red-800 font-semibold">
+                For all emergencies, please call our 24x7 helpline:
+            </p>
+            <p class="text-2xl font-bold text-red-600 mt-2">+91 987 654 3210</p>
+
+            <p class="mt-4 text-gray-700">
+                We have an emergency department operational round the clock, equipped with state-of-the-art life support systems
+                and critical care professionals. Reach out immediately for urgent medical needs.
+            </p>
+
+            <p class="mt-6 text-gray-600 italic">
+                You may also visit us directly at:
+                <br>
+                CareWell Emergency Block, Gate No. 2, Sector 12, New Ashok Nagar, Delhi - 110096
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
