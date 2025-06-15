@@ -383,7 +383,7 @@ def admin_delete_appointment(request, appointment_id):
     if request.method == 'POST':
         appointment.delete()
         messages.success(request, "Appointment deleted successfully.")
-        return redirect('admins/view_appointments')
+        return redirect('view_appointments')
 
     return render(request, 'admins/delete_appointment.html', {'appointment': appointment})
 

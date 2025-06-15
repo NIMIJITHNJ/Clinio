@@ -161,8 +161,8 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = 'redis-cli --tls -u redis://default:AW9jAAIjcDEzMWI0NmNkNDJiMjQ0ZDYzODk2N2QwOWVkZmUwMGY2NnAxMA@cuddly-collie-28515.upstash.io:6379'
+CELERY_RESULT_BACKEND = 'redis-cli --tls -u redis://default:AW9jAAIjcDEzMWI0NmNkNDJiMjQ0ZDYzODk2N2QwOWVkZmUwMGY2NnAxMA@cuddly-collie-28515.upstash.io:6379'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
