@@ -178,9 +178,9 @@ DEFAULT_FROM_EMAIL = 'carewellmsh@gmail.com'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# # Auto logout after 30 minutes (1800 seconds)
-# SESSION_COOKIE_AGE = 1800  # 30 minutes in seconds
-# SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Logout on browser close
+# Auto logout after 30 minutes (1800 seconds)
+SESSION_COOKIE_AGE = 1800  # 30 minutes in seconds
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Logout on browser close
 
 SITE_ID = 1
 
