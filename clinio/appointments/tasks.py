@@ -15,7 +15,7 @@ def auto_approve_appointment(appointment_id):
 
             #Send confirmation email
             if appointment.patient.user.email:
-                send_appointment_confirmation(appointment)
+                send_appointment_confirmation.delay(appointment.id)
     except Appointment.DoesNotExist:
         pass
 
