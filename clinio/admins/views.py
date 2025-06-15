@@ -32,6 +32,7 @@ from appointments.tasks import send_appointment_confirmation
 from accounts.models import Bill
 from patients.forms import OfflinePatientForm, OfflinePatientUserForm
 from django.utils.crypto import get_random_string
+from django.db import transaction
 
 def admins_home(request):
     return render(request, 'admins_home.html')
@@ -173,7 +174,7 @@ def ajax_update_appointment_status(request):
 
             # CELERY TRIGGER
             if new_status == 'Approved' and appt.patient.user.email:
-                send_appointment_confirmation.delay(appt.id)
+                transaction.on_commit(lambda: send_appointment_confirmation.delay(appt.id))
 
                 # BILL CREATION
                 if not hasattr(appt, 'bill'):
