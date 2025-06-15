@@ -161,8 +161,8 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
-CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+CELERY_BROKER_URL = 'amqps://llkhainw:8i4yV5h723dOLG6jMeBXZxAi6GjD-MEn@whale.rmq.cloudamqp.com/llkhainw'
+CELERY_RESULT_BACKEND = 'rpc://'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
