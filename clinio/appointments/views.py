@@ -18,7 +18,7 @@ from django.contrib.auth.decorators import user_passes_test
 from admins.views import is_admin_or_staff
 from django.urls import reverse_lazy
 from decimal import Decimal 
-
+from appointments.tasks import send_appointment_confirmation
 
 
 
@@ -55,7 +55,11 @@ def approve_appointment(request, appointment_id):
     appt.status = 'Approved'
     appt.set_fee_if_not_set()
     appt.save()
- 
+
+    # Send confirmation email via Celery
+    if appt.patient.user.email:
+        send_appointment_confirmation.delay(appt.id)
+
     # Create bill if it doesn't exist
     if not hasattr(appt, 'bill'):
         Bill.objects.create(
