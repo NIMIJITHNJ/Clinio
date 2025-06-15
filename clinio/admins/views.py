@@ -174,7 +174,7 @@ def ajax_update_appointment_status(request):
 
             # CELERY TRIGGER
             if new_status == 'Approved' and appt.patient.user.email:
-                transaction.on_commit(lambda: send_appointment_confirmation.delay(appt.id))
+                transaction.on_commit(lambda: send_appointment_confirmation.apply_async((appt.id,), countdown=3))
 
                 # BILL CREATION
                 if not hasattr(appt, 'bill'):
